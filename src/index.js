@@ -18,22 +18,3 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore();
-const colRef = collection(db, "movies")
-
-getDocs(colRef).then(data => {
-    data.docs.forEach(document => {
-        console.log(document.data())
-    })
-})
-
-const addMovForm = document.querySelector("#addMovForm");
-addMovForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const movObject = {
-        name: e.target.name.value,
-        desc: e.target.desc.value
-    }
-    console.log(movObject);
-    addDoc(colRef, movObject);
-})

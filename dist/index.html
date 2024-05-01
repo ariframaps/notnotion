@@ -10,14 +10,50 @@
 </head>
 
 <body>
-    <h1>insert movie:</h1>
-    <form id="addMovForm">
-        <label for="movName">Name: </label>
-        <input name="name" type="text" id="movName" placeholder="name...">
-        <label for="movDesc">Description: </label>
-        <input name="desc" type="text" id="movDesc" placeholder="description...">
-        <button type="submit">submit</button>
-    </form>
+    <div class="container my-5">
+        <h1>Movie database admin:</h1>
+        <div class="row my-5">
+            <div class="col-6">
+                <form class="mb-4 bg-secondary bg-opacity-10 p-3 rounded-2">
+                    <h4 class="mb-4">Add movie</h4>
+                    <div class="mb-2">
+                        <label for="movName" class="form-label">Movie name:</label>
+                        <input type="text" class="form-control" id="movName">
+                    </div>
+                    <div class="mb-2">
+                        <label for="movCategory" class="form-label">Category:</label>
+                        <select id="movCategory" class="form-select">
+                            <option>Cartoon</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">add</button>
+                </form>
+
+                <form class="mb-4 bg-secondary bg-opacity-10 p-3 rounded-2">
+                    <h4 class="mb-4">Delete movie</h4>
+                    <div class="mb-3">
+                        <label for="movId" class="form-label">Movie id:</label>
+                        <input type="text" class="form-control" id="movId">
+                    </div>
+                    <button type="submit" class="btn btn-primary">delete</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <div class="card border border-black">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Id: </b>fdsaffdsafds</li>
+                        <li class="list-group-item"><b>Created at: </b>fdsafdasfdasfdasf dsaf</li>
+                        <li class="list-group-item"><b>Updated at: </b>fdsafdsafdsafdsafdsa </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
