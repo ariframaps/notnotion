@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, getDocs, getFirestore, onSnapshot, serverTimestamp } from "firebase/firestore";
+import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, onSnapshot, serverTimestamp } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,7 +31,7 @@ async function fetchAndRenderMovies() {
         let cards = '';
         // Iterate each document
         querySnapshot.forEach((doc) => {
-            console.log(doc.data());
+            // console.log(doc.data());
             const movieData = doc.data();
             // Generate card html adn concat it to cards variable
             cards += renderMovie(movieData, doc.id);
@@ -59,6 +59,21 @@ addMov.addEventListener("submit", (e) => {
     console.log(newMov);
     addDoc(colRef, newMov);
 })
+
+const deleteMov = document.querySelector("#deleteMov");
+deleteMov.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const docRef = doc(db, "movies", e.target.movId.value);
+    deleteDoc(docRef).then((() => {
+        console.log("movie deleted successfully")
+    }))
+})
+
+// onSnapshot(colRef, (data) => {
+//     data.docs.forEach(document => {
+//         console.log(document.data())
+//     })
+// })
 
 function renderMovie(movieData, id) {
     return `<div class="card border border-black mb-4">
