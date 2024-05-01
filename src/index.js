@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, onSnapshot, serverTimestamp } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -46,6 +46,19 @@ async function fetchAndRenderMovies() {
 
 // Call function
 fetchAndRenderMovies();
+
+const addMov = document.querySelector("#addMov");
+addMov.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const newMov = {
+        name: e.target.movName.value,
+        category: e.target.movCategory.value,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+    }
+    console.log(newMov);
+    addDoc(colRef, newMov);
+})
 
 function renderMovie(movieData, id) {
     return `<div class="card border border-black mb-4">

@@ -14,15 +14,15 @@
         <h1>Movie database admin:</h1>
         <div class="row my-5">
             <div class="col-6">
-                <form class="mb-4 bg-secondary bg-opacity-10 p-3 rounded-2">
+                <form id="addMov" class="mb-4 bg-secondary bg-opacity-10 p-3 rounded-2">
                     <h4 class="mb-4">Add movie</h4>
                     <div class="mb-2">
                         <label for="movName" class="form-label">Movie name:</label>
-                        <input type="text" class="form-control" id="movName">
+                        <input type="text" class="form-control" id="movName" name="movName">
                     </div>
                     <div class="mb-3">
                         <label for="movCategory" class="form-label">Category:</label>
-                        <select id="movCategory" class="form-select">
+                        <select id="movCategory" class="form-select" name="movCategory">
                             <option>Cartoon</option>
                             <option>Action</option>
                             <option>Sci-fi</option>
@@ -31,7 +31,7 @@
                     <button type="submit" class="btn btn-primary">add</button>
                 </form>
 
-                <form class="mb-4 bg-secondary bg-opacity-10 p-3 rounded-2">
+                <form id="deleteMov" class="mb-4 bg-secondary bg-opacity-10 p-3 rounded-2">
                     <h4 class="mb-4">Delete movie</h4>
                     <div class="mb-3">
                         <label for="movId" class="form-label">Movie id:</label>
