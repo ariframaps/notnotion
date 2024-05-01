@@ -20,10 +20,12 @@
                         <label for="movName" class="form-label">Movie name:</label>
                         <input type="text" class="form-control" id="movName">
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label for="movCategory" class="form-label">Category:</label>
                         <select id="movCategory" class="form-select">
                             <option>Cartoon</option>
+                            <option>Action</option>
+                            <option>Sci-fi</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">add</button>
@@ -38,17 +40,19 @@
                     <button type="submit" class="btn btn-primary">delete</button>
                 </form>
             </div>
-            <div class="col-6">
-                <div class="card border border-black">
+
+            <div class="col-6" id="movCardContainer">
+                <!-- <div class="card border border-black">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><b>Id: </b>fdsaffdsafds</li>
+                        <li class="list-group-item"><b>Category: </b>fdsaffdsafds</li>
                         <li class="list-group-item"><b>Created at: </b>fdsafdasfdasfdasf dsaf</li>
                         <li class="list-group-item"><b>Updated at: </b>fdsafdsafdsafdsafdsa </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

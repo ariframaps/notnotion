@@ -18,3 +18,45 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore();
+const colRef = collection(db, "movies");
+
+const movCardContainer = document.querySelector("#movCardContainer");
+
+async function fetchAndRenderMovies() {
+    try {
+        // Fetch from Firebase
+        const querySnapshot = await getDocs(colRef);
+
+        let cards = '';
+        // Iterate each document
+        querySnapshot.forEach((doc) => {
+            console.log(doc.data());
+            const movieData = doc.data();
+            // Generate card html adn concat it to cards variable
+            cards += renderMovie(movieData, doc.id);
+        });
+
+        // Override card container innerHTML
+        movCardContainer.innerHTML = cards;
+    } catch (error) {
+        console.error("Error fetching and rendering movies:", error);
+    }
+}
+
+// Call function
+fetchAndRenderMovies();
+
+function renderMovie(movieData, id) {
+    return `<div class="card border border-black mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">${movieData.name}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Id: </b>${id}</li>
+                    <li class="list-group-item"><b>Category: </b>${movieData.category}</li >
+                    <li class="list-group-item"><b>Created at: </b>${movieData.createdAt.toDate()}</li>
+                    <li class="list-group-item"><b>Updated at: </b>${movieData.updatedAt.toDate()}</li>
+                </ul >
+            </div > `
+}
