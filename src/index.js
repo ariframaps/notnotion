@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, serverTimestamp, query, where, orderBy, updateDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,9 +20,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore();
 const colRef = collection(db, "movies");
-// const cobaRef = query(colRef, orderBy("createdAt"))
 
 const movCardContainer = document.querySelector("#movCardContainer");
 let qv = "";
