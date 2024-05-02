@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, serverTimestamp, query, where } from "firebase/firestore";
+import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, serverTimestamp, query, where, orderBy } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,14 +20,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const colRef = collection(db, "movies");
+const cobaRef = query(colRef, orderBy("createdAt"))
 
 const movCardContainer = document.querySelector("#movCardContainer");
+let qv = "";
+let ov = "";
 
-async function fetchAndRenderMovies(queryValue = "") {
+async function fetchAndRenderMovies(queryValue = "", orderValue = "") {
     try {
         let queryRef = colRef;
         if (queryValue) {
             queryRef = query(colRef, where("category", "==", queryValue));
+        }
+
+        if (orderValue) {
+            queryRef = query(queryRef, orderBy(orderValue))
         }
 
         // Fetch from Firebase
@@ -36,7 +43,6 @@ async function fetchAndRenderMovies(queryValue = "") {
         let cards = '';
         // Iterate each document
         querySnapshot.forEach((doc) => {
-            // console.log(doc.data());
             const movieData = doc.data();
             // Generate card html adn concat it to cards variable
             cards += renderMovie(movieData, doc.id);
@@ -79,21 +85,30 @@ deleteMov.addEventListener("submit", (e) => {
 const queryMov = document.querySelector("#queryMov");
 queryMov.addEventListener("submit", (e) => {
     e.preventDefault();
-    fetchAndRenderMovies(e.target.movQuery.value)
+    qv = e.target.movQuery.value;
+    fetchAndRenderMovies(qv);
 })
 
 const clearQuery = document.querySelector("#clearQuery");
 clearQuery.addEventListener("click", (e) => {
-    e.preventDefault();
     queryMov.reset();
+    qv = ""
     fetchAndRenderMovies();
 })
 
-// onSnapshot(colRef, (data) => {
-//     data.docs.forEach(document => {
-//         console.log(document.data())
-//     })
-// })
+const orderMov = document.querySelector("#orderMov");
+orderMov.addEventListener("submit", (e) => {
+    e.preventDefault();
+    ov = e.target.movOrder.value
+    console.log(ov)
+    fetchAndRenderMovies(qv, ov)
+})
+
+const clearOrder = document.querySelector('#clearOrder');
+clearOrder.addEventListener('click', () => {
+    orderMov.reset();
+    ov = ""
+})
 
 function renderMovie(movieData, id) {
     return `<div class="card border border-black mb-4">
