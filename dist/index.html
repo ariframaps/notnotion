@@ -59,6 +59,26 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button id="clearQuery" class="btn btn-danger ms-2">Clear</button>
                 </form>
+
+                <form id="orderMov" class="mb-4 bg-secondary bg-opacity-10 p-3 rounded-2">
+                    <h4 class="mb-4">Order:</h4>
+                    <div class="mb-2">
+                        <span class="me-3">
+                            <input type="radio" name="movOrder" id="Category" value="category">
+                            <label for="Category">Category</label>
+                        </span>
+                        <span class="me-3">
+                            <input type="radio" name="movOrder" id="Created" value="createdAt">
+                            <label for="Created">Created</label>
+                        </span>
+                        <span class="me-3">
+                            <input type="radio" name="movOrder" id="Updated" value="updatedAt">
+                            <label for="Updated">Updated</label>
+                        </span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button id="clearOrder" class="btn btn-danger ms-2">Clear</button>
+                </form>
             </div>
 
             <div class="col-6" id="movCardContainer">
