@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, onSnapshot, serverTimestamp } from "firebase/firestore";
+import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, serverTimestamp, query, where } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,10 +23,15 @@ const colRef = collection(db, "movies");
 
 const movCardContainer = document.querySelector("#movCardContainer");
 
-async function fetchAndRenderMovies() {
+async function fetchAndRenderMovies(queryValue = "") {
     try {
+        let queryRef = colRef;
+        if (queryValue) {
+            queryRef = query(colRef, where("category", "==", queryValue));
+        }
+
         // Fetch from Firebase
-        const querySnapshot = await getDocs(colRef);
+        const querySnapshot = await getDocs(queryRef);
 
         let cards = '';
         // Iterate each document
@@ -58,6 +63,7 @@ addMov.addEventListener("submit", (e) => {
     }
     console.log(newMov);
     addDoc(colRef, newMov);
+    fetchAndRenderMovies();
 })
 
 const deleteMov = document.querySelector("#deleteMov");
@@ -66,7 +72,21 @@ deleteMov.addEventListener("submit", (e) => {
     const docRef = doc(db, "movies", e.target.movId.value);
     deleteDoc(docRef).then((() => {
         console.log("movie deleted successfully")
+        fetchAndRenderMovies();
     }))
+})
+
+const queryMov = document.querySelector("#queryMov");
+queryMov.addEventListener("submit", (e) => {
+    e.preventDefault();
+    fetchAndRenderMovies(e.target.movQuery.value)
+})
+
+const clearQuery = document.querySelector("#clearQuery");
+clearQuery.addEventListener("click", (e) => {
+    e.preventDefault();
+    queryMov.reset();
+    fetchAndRenderMovies();
 })
 
 // onSnapshot(colRef, (data) => {
