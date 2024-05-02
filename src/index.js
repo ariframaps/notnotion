@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, serverTimestamp, query, where, orderBy, updateDoc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -128,6 +128,48 @@ editMov.addEventListener("submit", (e) => {
     editMov.reset();
     fetchAndRenderMovies()
 })
+
+//auth
+const login = document.querySelector("#login");
+login.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const userLogin = {
+        email: e.target.emailLogin.value,
+        password: e.target.passwordLogin.value
+    }
+    console.log(userLogin);
+    signInWithEmailAndPassword(auth, e.target.emailLogin.value, e.target.passwordLogin.value)
+        .then(data => {
+            console.log(data);
+            console.log("login successful")
+        })
+    login.reset();
+})
+
+const register = document.querySelector("#register");
+register.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const userRegister = {
+        email: e.target.emailRegister.value,
+        password: e.target.passwordRegister.value
+    }
+    console.log(userRegister);
+    createUserWithEmailAndPassword(auth, e.target.emailRegister.value, e.target.passwordRegister.value)
+        .then(data => {
+            console.log(data);
+            console.log("register successful")
+        })
+    register.reset();
+})
+
+const logout = document.querySelector("#logout");
+logout.addEventListener("click", () => {
+    signOut(auth)
+        .then((data) => {
+            console.log("logged out");
+        })
+        ;
+});
 
 function renderMovie(movieData, id) {
     return `<div class="card border border-black mb-4">
