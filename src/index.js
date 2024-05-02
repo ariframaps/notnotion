@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, serverTimestamp, query, where, orderBy } from "firebase/firestore";
+import { doc, addDoc, collection, deleteDoc, getDocs, getFirestore, serverTimestamp, query, where, orderBy, updateDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const colRef = collection(db, "movies");
-const cobaRef = query(colRef, orderBy("createdAt"))
+// const cobaRef = query(colRef, orderBy("createdAt"))
 
 const movCardContainer = document.querySelector("#movCardContainer");
 let qv = "";
@@ -28,9 +28,9 @@ let ov = "";
 
 async function fetchAndRenderMovies(queryValue = "", orderValue = "") {
     try {
-        let queryRef = colRef;
+        let queryRef = collection(db, "movies");;
         if (queryValue) {
-            queryRef = query(colRef, where("category", "==", queryValue));
+            queryRef = query(queryRef, where("category", "==", queryValue));
         }
 
         if (orderValue) {
@@ -108,6 +108,23 @@ const clearOrder = document.querySelector('#clearOrder');
 clearOrder.addEventListener('click', () => {
     orderMov.reset();
     ov = ""
+})
+
+const editMov = document.querySelector("#editMov");
+editMov.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const docRef = doc(db, "movies", e.target.editId.value);
+    updateDoc(docRef, {
+        name: e.target.editName.value,
+        updatedAt: serverTimestamp()
+    }).then(() => {
+        console.log("update success")
+    }).catch(() => {
+        console.log("update failed")
+    })
+    editMov.reset();
+    fetchAndRenderMovies()
 })
 
 function renderMovie(movieData, id) {
